@@ -1,0 +1,29 @@
+<?php
+
+namespace Modules\Auth\Livewire;
+
+use Livewire\Attributes\Layout;
+use Livewire\Attributes\Validate;
+use Livewire\Component;
+
+class Login extends Component
+{
+    #[Validate('required')]
+    public $email;
+    #[Validate('required|min:6')]
+    public $password;
+
+    public $remember;
+
+    public function loginUser()
+    {
+        $this->validate();
+        dd(auth()->attempt(['email' => $this->email, 'password' => $this->password],$this->remember));
+
+    }
+    #[Layout('auth::layouts.master')]
+    public function render()
+    {
+        return view('auth::livewire.login');
+    }
+}
